@@ -1,41 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Accelerometer } from 'expo-sensors';
-import Constants from 'expo-constants'
-import AccelerometerManager from './src/components/AccelerometerManager'
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import Player from './src/components/Player';
+import CurrencyManager from './src/components/CurrencyManager';
 
 export default function App() {
-
-  const [money, setMoney] = useState(0)
-  const [moneyMultiplier, setMoneyMultiplier] = useState(1);
-
-  function setMoneyCalc(value) {
-    setMoney(money + value);
-  }
-  //Acceleration Values
-
   return (
-    <View>
-      <AccelerometerManager setMoneyCallback={setMoneyCalc} />
-      <View style={styles.gameCurrencies}>
-        <Text>Money: {money.toFixed(2)}{"\n"}</Text>
-      </View>
-      
-      <Player/>
-
-      <TouchableOpacity>
-        <Text>Aa</Text>
-      </TouchableOpacity>
+    <View style={styles.container}>
+      <CurrencyManager />
+      <Player />
     </View>
-    
   );
 }
 
 const styles = StyleSheet.create({
-  gameCurrencies: {
-    position: 'absolute',
-    left: 10,
-    top: Constants.statusBarHeight
+  container: {
+    position: 'absolute', 
+    top: 0, 
+    left: 0, 
+    right: 0, 
+    bottom: 0, 
+    justifyContent: 'center', 
+    alignItems: 'center'
   }
 }); 
