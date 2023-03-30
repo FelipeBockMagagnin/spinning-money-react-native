@@ -3,6 +3,7 @@ import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Accelerometer } from 'expo-sensors';
 import Constants from 'expo-constants'
 import AccelerometerManager from './src/components/AccelerometerManager'
+import Player from './src/components/Player';
 
 export default function App() {
 
@@ -20,8 +21,12 @@ export default function App() {
       <View style={styles.gameCurrencies}>
         <Text>Money: {money.toFixed(2)}{"\n"}</Text>
       </View>
+      
+      <Player/>
 
-      <TouchableOpacity>Aa</TouchableOpacity>
+      <TouchableOpacity>
+        <Text>Aa</Text>
+      </TouchableOpacity>
     </View>
     
   );

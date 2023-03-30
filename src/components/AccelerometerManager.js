@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Constants from 'expo-constants';
 import { Accelerometer } from 'expo-sensors';
-import Constants from 'expo-constants'
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import PropTypes from 'prop-types';
 
-export default function AccelerometerManager({setMoneyCallback}) {
+AccelerometerManager.propTypes = {
+  setMoneyCallback: PropTypes.func
+};
 
+export default function AccelerometerManager({ setMoneyCallback }) {
   //Acceleration Values
   const [{ x, y, z }, setData] = useState({
     x: 0,
     y: 0,
     z: 0,
   });
-  const [{lastX, lastY, lastZ}, setLastData] = useState({
+  const [{ lastX, lastY, lastZ }, setLastData] = useState({
     lastX: 0,
     lastY: 0,
     lastZ: 0,
@@ -22,6 +26,7 @@ export default function AccelerometerManager({setMoneyCallback}) {
 
   //Game consts
   const moneyMultiplier = 0.01;
+  const isDebug = false;
 
   useEffect(() => {
     const currentDifferenceX = x - lastX;
@@ -43,13 +48,11 @@ export default function AccelerometerManager({setMoneyCallback}) {
 
     setDifference(sumValue);
     setMoneyCallback(sumValue);
-  }, [x, y, z])
+  }, [x, y, z]);
 
   const _subscribe = () => {
-    setSubscription(
-      Accelerometer.addListener(setData)
-    );
-    Accelerometer.setUpdateInterval(200)
+    setSubscription(Accelerometer.addListener(setData));
+    Accelerometer.setUpdateInterval(200);
   };
 
   const _unsubscribe = () => {
@@ -62,20 +65,23 @@ export default function AccelerometerManager({setMoneyCallback}) {
     return () => _unsubscribe();
   }, []);
 
+  if(!isDebug) return;
+
   return (
     <View>
       <View style={styles.container}>
-        <Text style={styles.text}>Debug = x: {x.toFixed(2)}, y: {y.toFixed(2)}, z: {z.toFixed(2)}</Text>
+        <Text style={styles.text}>
+          Debug = x: {x.toFixed(2)}, y: {y.toFixed(2)}, z: {z.toFixed(2)}
+        </Text>
         <Text>Difference: {difference.toFixed(2)}</Text>
       </View>
     </View>
-    
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 100
+    marginTop: 100,
   },
   button: {
     width: '50%',
@@ -85,15 +91,15 @@ const styles = StyleSheet.create({
     marginTop: 20,
     padding: 20,
     borderRadius: 10,
-    color: 'white'
+    color: 'white',
   },
   textButton: {
     color: 'white',
-    fontSize: 20
+    fontSize: 20,
   },
   gameCurrencies: {
     position: 'absolute',
     left: 10,
-    top: Constants.statusBarHeight
-  }
-}); 
+    top: Constants.statusBarHeight,
+  },
+});
