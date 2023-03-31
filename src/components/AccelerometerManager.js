@@ -2,13 +2,8 @@ import Constants from 'expo-constants';
 import { Accelerometer } from 'expo-sensors';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import PropTypes from 'prop-types';
 
-AccelerometerManager.propTypes = {
-  setMoneyCallback: PropTypes.func
-};
-
-export default function AccelerometerManager({ setMoneyCallback }) {
+export default function AccelerometerManager({ setMoneyCallback, moneyMultiplier }) {
   //Acceleration Values
   const [{ x, y, z }, setData] = useState({
     x: 0,
@@ -25,7 +20,6 @@ export default function AccelerometerManager({ setMoneyCallback }) {
   const [subscription, setSubscription] = useState(null);
 
   //Game consts
-  const moneyMultiplier = 0.01;
   const isDebug = false;
 
   useEffect(() => {
